@@ -70,6 +70,11 @@ export async function modifyXMP(inputFilePath: string, outputFilePath: string, o
             }
         }
 
+        // Remove default Orientation - causes issues in MacOS (WTF?!)
+        if (metadata.Orientation == 1) {
+            metadata.Orientation = undefined;
+        }
+
         await exiftool.write(outputFilePath, metadata)
 
         logger.debug('output metadata:', prettyStringify(metadata));
