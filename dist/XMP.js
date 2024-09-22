@@ -72,6 +72,10 @@ function modifyXMP(inputFilePath, outputFilePath, options) {
                     metadata.RegionInfoACDSee = undefined;
                 }
             }
+            // Remove default Orientation - causes issues in MacOS (WTF?!)
+            if (metadata.Orientation == 1) {
+                metadata.Orientation = undefined;
+            }
             yield exiftool.write(outputFilePath, metadata);
             logger.debug('output metadata:', (0, Utils_1.prettyStringify)(metadata));
             logger.debug(`XMP file updated successfully: ${outputFilePath}`);
