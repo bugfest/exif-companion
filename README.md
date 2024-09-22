@@ -6,11 +6,11 @@ exif-companion is a companion tool that transforms proprietary EXIF metadata int
 
 ### Generate XMP metadata with standard EXIF regions attributes
 
-These files/sidecars can be used to import regions in photo management applications like [Immich](https://github.com/immich-app/immich)
+These image files or sidecars can be used to import regions in photo management applications like [Immich](https://github.com/immich-app/immich)
 
 ## Compatible input formats
 
-- ACDSee (since version `0.0.1`)
+- ACDSee (since version `1.0.0`)
 
 ## Install
 
@@ -19,14 +19,24 @@ Prerequisites:
 
 ```shell
 git clone https://github.com/bugfest/exif-companion
-npm i
+npm i --saveDev
 ```
 
-## Usage
+Examples:
+```shell
+# show help
+npm run start -- --help
+
+# fix Image files
+npm run start -- --input path/to/input.jpg --output path/to.output --keep
+
+# fix XMP sidecar files)
+npm run start -- --input path/to/input.jpg --output path/to.output --keep
+```
+
+### Command line options
 
 ```shell
-$ npm run start -- --help
-
 Usage: index.ts -i <inputFilePath> -o <outputFilePath> [-k] [-d]
 
 Options:
@@ -38,7 +48,15 @@ Options:
       --debug    Enable debug                         [boolean] [default: false]
 ```
 
-Example:
+## Docker
+
+Build:
 ```shell
-npm run start -- --input path/to/input.jpg.xmp --output path/to.output.xmp --keep
+docker build . -t exif-companion
+```
+
+Usage:
+```shell
+docker run --rm -ti -v path/to/input-directory:/input:ro -v path/to/output-directory:/output exif-companion \
+    --input '/input/filename.jpg' --output '/output/filename.jpg' --keep
 ```
